@@ -1,3 +1,4 @@
+from sqlalchemy import desc
 from core.database import db_session
 from core.models import Request, Location, MedicalCenter
 from core.database import db_session
@@ -30,7 +31,7 @@ def process():
 
 @app.route('/history', methods=['GET'])
 def history():
-    return render_template('history.html', requests=Request.query.all())
+    return render_template('history.html', requests=Request.query.order_by(desc('created_at')).all())
 
 
 def get_calculate(data):
