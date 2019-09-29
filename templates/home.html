@@ -20,17 +20,48 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 	<a class="navbar-brand" href="/">Alkanza</a>
 </nav>
-<br>
-<br>
-<br>
-<br>
-<div id="map" class="col-sm-6 col-sm-offset-3"></div>
+
+<!-- Page Content -->
+<div id="map"></div>
+<div class="container">
+
+	<!-- Portfolio Item Heading -->
+	<h3 class="my-4">Search radius</h3>
+	<!-- Portfolio Item Row -->
+	<div class="col-sm-12">
+		<div class="form-inline">
+			<div class="input-group">
+				<input type="number" class="form-control mb-2" id="radius" value="1000">
+				<div class="input-group-btn mr-sm-2">
+					<button class="btn btn-default"><span>meters</span></button>
+				</div>
+				<button id="process" class="btn btn-primary mb-2">Analyze</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- /.row -->
+
+	{% if data|length > 1 %}
+	<!-- Portfolio Item Heading -->
+	<h3 class="my-4">Analysis result</h3>
+	<!-- Portfolio Item Row -->
+	<div class="col-sm-12">
+		{% for item in data %}
+		{{item}}
+		{% endfor %}
+	</div>
+	<!-- /.row -->
+	{% endif %}
+</div>
+<!-- /.container -->
 <!-- Bootstrap core JavaScript -->
 <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
 <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCqQDySsc3nva4congYWznwt_tKaLbrI9M&callback=initMap" async
-	defer></script>
+<script
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCqQDySsc3nva4congYWznwt_tKaLbrI9M&callback=initMap&libraries=places"
+	async defer></script>
 </body>
 
 </html>
