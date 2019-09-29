@@ -41,18 +41,15 @@
 	</div>
 
 	<!-- /.row -->
-
-	{% if data|length > 1 %}
-	<!-- Portfolio Item Heading -->
-	<h3 class="my-4">Analysis result</h3>
+	<h3 id="title-results" class="my-4"></h3>
 	<!-- Portfolio Item Row -->
-	<div class="col-sm-12">
-		{% for item in data %}
-		{{item}}
-		{% endfor %}
+	<div class="row">
+		<div id="result-table-medical-centers" class="table-responsive"></div>
+	</div>
+	<div class="row">
+		<div id="result-table" class="table-responsive"></div>
 	</div>
 	<!-- /.row -->
-	{% endif %}
 </div>
 <!-- /.container -->
 <!-- Bootstrap core JavaScript -->

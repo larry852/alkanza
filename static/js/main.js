@@ -108,6 +108,7 @@ function buildRequest() {
         medical_center.location = location;
         medical_center.distance = calculateDistance(val.geometry.location);
         medical_center.name = val.name;
+        medical_center.balanced = Math.random() >= 0.5;
         return medical_center;
     });
     var user_location = new Object();
@@ -134,13 +135,45 @@ function enableSubmit() {
 }
 
 $("#process").click(function () {
-    alert("hola");
     post = $.ajax({
         url: '/process',
-        type: "POST",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        type: 'POST',
         data: JSON.stringify(request),
     });
     post.done(function (response, textStatus, jqXHR) {
-        resultsTable(response);
+        resultsMedicalCenters(response);
+        resultsGeneral(response);
+        $('#title-results').text('Analysis result');
+        document.getElementById('result-table').scrollIntoView();
     });
 });
+
+function resultsMedicalCenters(results) {
+    var container = $('#result-table-medical-centers');
+    container.html('');
+    table = $('<table class="table table-bordered"><thead class="thead-dark"><tr><th>Medical center</th><th>Distance</th><th>Balanced</th></tr></thead>');
+    results.medical_centers.forEach(function (result) {
+        var tr = $('<tr>');
+        tr.append('<td>' + result['name'] + '</td>');
+        tr.append('<td>' + result['distance'].toFixed(2) + ' meters</td>');
+        tr.append('<td>' + (result['balanced'] ? 'Yes' : 'No') + '</td>');
+        table.append(tr);
+    });
+    container.append(table);
+}
+
+function resultsGeneral(results) {
+    var container = $('#result-table');
+    container.html('');
+    table = $('<table class="table table-bordered"><thead class="thead-dark"><tr><th>Search radius</th><th>Current position</th><th>Distance imbalance</th></tr></thead>');
+    var tr = $('<tr>');
+    tr.append('<td>' + results['radius'] + '</td>');
+    tr.append('<td> Latitude ' + results['user_location']['latitude'] + '<br> Longitude ' + results['user_location']['longitude'] + '</td>');
+    tr.append('<td><b>' + results['calculate'] + '</b></td>');
+    table.append(tr);
+    container.append(table);
+}
