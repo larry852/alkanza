@@ -10,3 +10,5 @@ source env/bin/activate
 pip install -r requirements.txt
 python app.py
 ```
+
+[https://alkanza-larry.herokuapp.com/](https://alkanza-larry.herokuapp.com/)
