@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<title>Alkanza</title>
+
+	<!-- Bootstrap core CSS -->
+	<link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+
+	<!-- Custom styles for this template -->
+	<link href="{{ url_for('static', filename='css/template.css') }}" rel="stylesheet">
+
+</head>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+	<a class="navbar-brand" href="/">Alkanza</a>
+	<a class="navbar-brand" href="/history">History</a>
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+	{% for request in requests %}
+	<h3 id="title-results" class="my-4">Request {{request.id}}</h3>
+	<div class="row">
+		<div id="result-table" class="table-responsive">
+			<table class="table table-bordered">
+				<thead class="thead-dark">
+					<tr>
+						<th>Date</th>
+						<th>Search radius</th>
+						<th>User location</th>
+						<th>Distance imbalance</th>
+					</tr>
+					<tr>
+						<td>{{request.created_at}}</td>
+						<td>{{request.radius}} meters</td>
+						<td>{{'Latitude {}'.format(request.location.latitude)}} <br>
+							{{'Longitude {}'.format(request.location.longitude)}}
+						</td>
+						<td><b>{{request.distance_imbalance}}</b></td>
+					</tr>
+				</thead>
+			</table>
+		</div>
+	</div>
+	<div class="row">
+		<div id="result-table-medical-centers" class="table-responsive">
+			<table class="table table-bordered">
+				<thead class="thead-dark">
+					<tr>
+						<th>Medical center</th>
+						<th>Location</th>
+						<th>Distance</th>
+						<th>Balanced</th>
+					</tr>
+					{% for medical_center in request.medical_centers %}
+					<tr>
+						<td>{{medical_center.name}}</td>
+						<td>{{'Latitude {}'.format(medical_center.location.latitude)}} <br>
+							{{'Longitude {}'.format(medical_center.location.longitude)}}
+						</td>
+						<td>{{ "%.2f"|format(medical_center.distance) }} meters</td>
+						<td>{{'Yes' if medical_center.balanced else 'No'}}</td>
+					</tr>
+					{% endfor %}
+				</thead>
+			</table>
+		</div>
+	</div>
+	{% endfor %}
+</div>
+<!-- /.container -->
+<!-- Bootstrap core JavaScript -->
+<script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+</body>
+
+</html>

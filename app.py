@@ -28,6 +28,11 @@ def process():
     return jsonify(data)
 
 
+@app.route('/history', methods=['GET'])
+def history():
+    return render_template('history.html', requests=Request.query.all())
+
+
 def get_calculate(data):
     algorithm = Algorithm.get_instance()
     distances = [

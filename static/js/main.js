@@ -155,10 +155,11 @@ $("#process").click(function () {
 function resultsMedicalCenters(results) {
     var container = $('#result-table-medical-centers');
     container.html('');
-    table = $('<table class="table table-bordered"><thead class="thead-dark"><tr><th>Medical center</th><th>Distance</th><th>Balanced</th></tr></thead>');
+    table = $('<table class="table table-bordered"><thead class="thead-dark"><tr><th>Medical center</th><th>Location</th><th>Distance</th><th>Balanced</th></tr></thead>');
     results.medical_centers.forEach(function (result) {
         var tr = $('<tr>');
         tr.append('<td>' + result['name'] + '</td>');
+        tr.append('<td> Latitude ' + result['location']['latitude'] + '<br> Longitude ' + result['location']['longitude'] + '</td>');
         tr.append('<td>' + result['distance'].toFixed(2) + ' meters</td>');
         tr.append('<td>' + (result['balanced'] ? 'Yes' : 'No') + '</td>');
         table.append(tr);
@@ -169,9 +170,9 @@ function resultsMedicalCenters(results) {
 function resultsGeneral(results) {
     var container = $('#result-table');
     container.html('');
-    table = $('<table class="table table-bordered"><thead class="thead-dark"><tr><th>Search radius</th><th>Current position</th><th>Distance imbalance</th></tr></thead>');
+    table = $('<table class="table table-bordered"><thead class="thead-dark"><tr><th>Search radius</th><th>User location</th><th>Distance imbalance</th></tr></thead>');
     var tr = $('<tr>');
-    tr.append('<td>' + results['radius'] + '</td>');
+    tr.append('<td>' + results['radius'] + ' meters</td>');
     tr.append('<td> Latitude ' + results['user_location']['latitude'] + '<br> Longitude ' + results['user_location']['longitude'] + '</td>');
     tr.append('<td><b>' + results['calculate'] + '</b></td>');
     table.append(tr);
